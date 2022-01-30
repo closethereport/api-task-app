@@ -4,10 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { title } from 'process';
+import { Task } from './task.model';
 
 @Injectable()
 export class TasksService {
-  tasks: any[] = [
+  tasks: Task[] = [
     {
       id: 'First',
       title: 'Task number one',
@@ -26,12 +27,12 @@ export class TasksService {
   ];
 
   //Create Task
-  createTask(task: any): any[] {
+  createTask(task: Task): Task[] {
     if (task.title === '' || task.description === '') {
       throw new BadRequestException();
     }
 
-    const taskToCreate: any = {
+    const taskToCreate: Task = {
       id: new Date().getTime().toString(),
       title: task.title,
       description: task.description,
@@ -43,12 +44,12 @@ export class TasksService {
   }
 
   //Get All Tasks
-  getTasks(): any[] {
+  getTasks(): Task[] {
     return [...this.tasks];
   }
 
   //Get One Task
-  getOneTask(id: string): any {
+  getOneTask(id: string): Task {
     const task = this.findTask(id);
 
     if (!task) {
@@ -59,7 +60,7 @@ export class TasksService {
   }
 
   //Update Task
-  updateTask(id: string, task: any): any {
+  updateTask(id: string, task: Task): Task {
     if (task.title === '' || task.description === '')
       throw new BadRequestException();
 

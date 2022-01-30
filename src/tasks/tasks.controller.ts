@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { timeStamp } from 'console';
+import { Task } from './task.model';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
@@ -16,25 +17,25 @@ export class TasksController {
 
   //Create Task
   @Post()
-  createTask(@Body() body: any): any[] {
+  createTask(@Body() body: Task): Task[] {
     return this.taskService.createTask(body);
   }
 
   //Get Tasks
   @Get()
-  getTasks(): any[] {
+  getTasks(): Task[] {
     return this.taskService.getTasks();
   }
 
   //Get One Task
   @Get(':id')
-  getOneTask(@Param('id') id: string): any {
+  getOneTask(@Param('id') id: string): Task {
     return this.taskService.getOneTask(id);
   }
 
   //Update Task
   @Patch(':id')
-  updateTask(@Param('id') id: string, @Body() body: any): any {
+  updateTask(@Param('id') id: string, @Body() body: Task): Task {
     return this.taskService.updateTask(id, body);
   }
 
