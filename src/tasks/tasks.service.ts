@@ -27,12 +27,12 @@ export class TasksService {
   ];
 
   //Create Task
-  createTask(task: Task): Task[] {
+  async createTask(task: Task): Promise<Task[]> {
     if (task.title === '' || task.description === '') {
       throw new BadRequestException();
     }
 
-    const taskToCreate: Task = {
+    const taskToCreate: Task = await {
       id: new Date().getTime().toString(),
       title: task.title,
       description: task.description,
@@ -44,13 +44,13 @@ export class TasksService {
   }
 
   //Get All Tasks
-  getTasks(): Task[] {
-    return [...this.tasks];
+  async getTasks(): Promise<Task[]> {
+    return await [...this.tasks];
   }
 
   //Get One Task
-  getOneTask(id: string): Task {
-    const task = this.findTask(id);
+  async getOneTask(id: string): Promise<Task> {
+    const task = await this.findTask(id);
 
     if (!task) {
       throw new NotFoundException();
@@ -60,32 +60,32 @@ export class TasksService {
   }
 
   //Update Task
-  updateTask(id: string, task: Task): Task {
+  async updateTask(id: string, task: Task): Promise<Task> {
     if (task.title === '' || task.description === '')
       throw new BadRequestException();
 
-    const index = this.tasks.findIndex((t) => t.id === id);
+    const index = await this.tasks.findIndex((t) => t.id === id);
     this.tasks[index] = { ...this.tasks[index], ...task };
 
     return { ...this.tasks[index] };
   }
 
   //Delete Task
-  deleteTask(id: string): string {
-    const task = this.findTask(id);
+  async deleteTask(id: string): Promise<string> {
+    const task = await this.findTask(id);
 
     if (!task) {
       throw new NotFoundException();
     }
 
-    const index = this.tasks.indexOf(task);
+    const index = await this.tasks.indexOf(task);
     this.tasks.splice(index, 1);
 
     return id;
   }
 
-  private findTask(id: string) {
-    const task = this.tasks.find((t) => t.id === id);
+  private async findTask(id: string): Promise<Task> {
+    const task = await this.tasks.find((t) => t.id === id);
     return task;
   }
 }
