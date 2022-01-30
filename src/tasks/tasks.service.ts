@@ -58,7 +58,18 @@ export class TasksService {
     return { ...task };
   }
 
-  //Delete One Task
+  //Update Task
+  updateTask(id: string, task: any): any {
+    if (task.title === '' || task.description === '')
+      throw new BadRequestException();
+
+    const index = this.tasks.findIndex((t) => t.id === id);
+    this.tasks[index] = { ...this.tasks[index], ...task };
+
+    return { ...this.tasks[index] };
+  }
+
+  //Delete Task
   deleteTask(id: string): string {
     const task = this.findTask(id);
 
